@@ -1,0 +1,89 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="card restaurant">
+        <div class='container'>
+        <div class="row">
+        <div class='title'>
+          <h1><%= @restaurant.name %></h1>
+        </div>
+        </div>
+          <div class="row">
+            <div class="col-xs-4">
+              <div class="element">
+                <p><i class="fa fa-map-marker" aria-hidden="true"></i><%= @restaurant.address %><br />
+                  <i class="fa fa-phone" aria-hidden="true"></i><%= @restaurant.phone_number %></p>
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="element">
+                  <p><%= @restaurant.category %></p>
+                </div>
+              </div>
+              <div class="col-xs-4">
+                <div class="element">
+                  <p><%= @restaurant.description %></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12">
+        <div id="map" style="height: 200px; background-color: grey; border-radius:10px; margin:10px">
+          <script>
+            function initMap() {
+              var lat, lng;
+              var adresse = "<%= @restaurant.address.split(" ").join("%20") %>";
+              $.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + adresse, function(data) {
+                lat = data.results[0].geometry.location.lat;
+                lng = data.results[0].geometry.location.lng;
+                var myLatLng = {lat: lat, lng: lng};
+
+      // Create a map object and specify the DOM element for display.
+      var map = new google.maps.Map(document.getElementById('map'), {
+        center: myLatLng,
+        scrollwheel: false,
+        zoom: 14
+      });
+
+      // Create a marker and set its position.
+      var marker = new google.maps.Marker({
+        map: map,
+        position: myLatLng,
+        title: 'Hello World!'
+      });
+    })
+            }
+          </script>
+          <script async defer src="https://maps.googleapis.com/maps/api/js?&callback=initMap"></script>
+        </div>
+      </div>
+      <div class="col-xs-12 col-md-12">
+        <% @restaurant.reviews.each_with_index do |review, index| %>
+        <div class="col-xs-3">
+          <div class="card">
+            <div class='title'>
+              <h1>Review <%= index + 1 %></h1>
+            </div>
+            <p><%= review.content %></p>
+            <% (0...5).each do |i| %>
+            <% if i < review.rating %>
+            <i class="fa fa-star" aria-hidden="true"></i>
+            <% else %>
+            <i class="fa fa-star-o" aria-hidden="true"></i>
+            <% end %>
+            <% end %>
+          </div>
+        </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+  <div class="link">
+    <%= link_to "delete", restaurant_path(@restaurant), method: :delete, data: { confirm: "Are you sure?" } %>
+    || <%= link_to 'edit', edit_restaurant_path(@restaurant) %>
+    || <%= link_to 'add a review', new_restaurant_review_path(@restaurant.id) %>
+    || <%= link_to "return to the list", "/restaurants" %>
+  </div>
+

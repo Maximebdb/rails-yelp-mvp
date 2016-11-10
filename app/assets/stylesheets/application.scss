@@ -1,0 +1,67 @@
+// Graphical variables
+@import "config/variables";
+@import "config/bootstrap_variables";
+
+// External libraries
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "font-awesome-sprockets";
+@import "font-awesome";
+
+// Your CSS
+@import "layout/index";
+@import "components/index";
+@import "pages/index";
+@import "vendor/index";
+
+.banner {
+  background-color: #247BA0;
+  height: 100vh;
+  width: 100%;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  width:100%;
+}
+
+.card {
+  padding:20px;
+  min-height: 100px;
+  background-color: rgb(255,255,255);
+  border-radius:10px;
+  margin:10px;
+  text-align: center;
+}
+
+.card .restaurant{
+  height: auto;
+}
+
+.card li {
+  text-align:left;
+}
+
+.element {
+  padding:0px;
+}
+
+.link {
+  position: absolute;
+  display: block;
+  bottom: 20px;
+  padding:0px;
+  color:rgb(255,255,255);
+  text-align: center;
+}
+
+.link a{
+  color:rgb(255,255,255);
+}
+
+.link a:hover{
+  color:rgb(1,1,1);
+}
+
